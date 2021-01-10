@@ -778,10 +778,16 @@ odk2openVA_v151 <- function (odk, id_col = "meta.instanceID") {
     iv5Out[odk[ , indexData]=="yes" & odk[ , indexData_min]>=10, 149] <- "n"
     iv5Out[odk[ , indexData]=="yes" & odk[ , indexData_min]==99, 149] <- "."
     iv5Out[odk[ , indexData]=="yes" & odk[ , indexData_min]==88, 149] <- "."
-
+    
+    ## Shouldn't #150) be a compliment of #149) 
+    ##  such as if #149)="y" then #150)="n", 
+    ##          if #149)="n" then #150)="y", and
+    ##          if #149)=".", then #150="." 
     #150) Did the convulsions last for at least 10 minutes?	conv 10+m
-    iv5Out[odk[ , indexData]< 10, 150] <- "n"
-    iv5Out[odk[ , indexData]>=10, 150] <- "y"
+    # iv5Out[odk[ , indexData]< 10, 150] <- "n"
+    # iv5Out[odk[ , indexData]>=10, 150] <- "y"
+    iv5Out[iv5Out[,149]=="y",150]<-"n"
+    iv5Out[iv5Out[,149]=="n",150]<-"y"
 
     #161) Did the ulcer ooze pus for at least 2 weeks?	sk ul 2+w
     indexData <- which(stri_endswith_fixed(odkNames, whoNames[161]))
